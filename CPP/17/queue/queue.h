@@ -24,6 +24,11 @@ typedef struct queue{
     int  items;
 }Queue;
 
+typedef struct item{
+    long arrive;
+    int processtime;
+}Item;
+
 void InitializeQueue( Queue *pq );
 
 bool QueueIsFull( const Queue *pq );
