@@ -77,6 +77,31 @@ Status GetElem(LinkList L, int i, ElemType *e)
     return OK;
 }
 
+/* 单链表的插入 */
+Status ListInsert(LinkList *L, int i, ElemType e)
+{
+    int j;
+    LinkList p,s;
+
+    p = *L;
+    j = 1;
+    while( p && j < i ){  /* p用于寻找第i个节点 */
+        p = p->next;
+        j++;
+    }
+    if( !p || j > i ){
+        return ERROR;
+    }
+    s = (LinkList)malloc(sizeof(Node));
+
+    s->data = e;
+    s->next = p->next;
+    p->next = s; /*将s赋值给p的后继*/
+
+    return OK;
+}
+
+
 int main(int argc, char **argv)
 {
     LinkList P;
@@ -84,10 +109,11 @@ int main(int argc, char **argv)
 
     CreateListHead(&P,5);
 
+    ListInsert(&P, 3, e_list_data);
+
     if( OK == GetElem(P, 3, &e_list_data) ){
         printf("%d\n",e_list_data);
     }
-
     while(P){
         printf("%d\n", P->data);
         P = P->next;
