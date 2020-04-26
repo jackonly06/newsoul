@@ -101,11 +101,36 @@ Status ListInsert(LinkList *L, int i, ElemType e)
     return OK;
 }
 
+/* 单链表的删除 */
+Status ListDelete(LinkList *L, int i, ElemType e)
+{
+    int j;
+    LinkList p,q;
+
+    p = *L;
+    j = 1;
+
+    while( p->next || j < i ){ /* 遍历寻找第i个元素 */
+        p = p->next;
+        j++;
+    }
+
+    if( !(p->next) || j > i ){
+        return ERROR;
+     }
+
+    q = p->next;
+    p->next = q->next;  /* 将q的后继赋值给p的后继 */
+    e = q->data;       /* 将q结点中的数据给e */
+    free(q);            /* 释放内存 */
+
+    return OK;
+}
 
 int main(int argc, char **argv)
 {
     LinkList P;
-    ElemType e_list_data;
+    ElemType e_list_data = 6;
 
     CreateListHead(&P,5);
 
@@ -114,6 +139,9 @@ int main(int argc, char **argv)
     if( OK == GetElem(P, 3, &e_list_data) ){
         printf("%d\n",e_list_data);
     }
+
+    ListDelete(&P, 3, e_list_data);
+
     while(P){
         printf("%d\n", P->data);
         P = P->next;
