@@ -56,6 +56,25 @@ void CreateListHead(LinkList *L, int n)
     }
 }
 
+/* 在链表尾插入节点 */
+void CreateListTail(LinkList *L, int n)
+{
+    LinkList p,r;
+    int i;
+
+    srand(time(0));
+    *L = (LinkList)malloc(sizeof(Node));
+    r = *L;   /* 指向尾部的结点 */
+
+    for( i = 0; i < n; i++ ){
+        p = (Node *)malloc(sizeof(Node));
+        p->data = rand() % 100 + 1;
+        r->next = p;  /*将表终端结点的指针指向新结点*/
+        r = p;        /*将当前新结点定义为终端结点*/
+    }
+    r->next = NULL;   /*当前链表结束*/
+}
+
 /* 单链表的读取 */
 Status GetElem(LinkList L, int i, ElemType *e)
 {
@@ -110,7 +129,7 @@ Status ListDelete(LinkList *L, int i, ElemType e)
     p = *L;
     j = 1;
 
-    while( p->next || j < i ){ /* 遍历寻找第i个元素 */
+    while( p->next && j < i ){ /* 遍历寻找第i个元素 */
         p = p->next;
         j++;
     }
@@ -141,6 +160,8 @@ int main(int argc, char **argv)
     }
 
     ListDelete(&P, 3, e_list_data);
+
+    CreateListTail(&P, 2);
 
     while(P){
         printf("%d\n", P->data);
