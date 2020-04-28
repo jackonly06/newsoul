@@ -146,6 +146,23 @@ Status ListDelete(LinkList *L, int i, ElemType e)
     return OK;
 }
 
+Status ClearList(LinkList *L)
+{
+   LinkList p,q;
+
+   p = (*L)->next;  /* p指向第一个结点 */
+
+   while( p ){
+        q = p->next;
+        free(p);
+        p = q;
+   }
+
+   (*L)->next = NULL;
+
+   return OK;
+}
+
 int main(int argc, char **argv)
 {
     LinkList P;
