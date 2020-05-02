@@ -178,7 +178,9 @@ int main(int argc, char **argv)
 
     ListDelete(&P, 3, e_list_data);
 
-    CreateListTail(&P, 2);
+    ClearList(&P);
+
+//    CreateListTail(&P, 2);
 
     while(P){
         printf("%d\n", P->data);
